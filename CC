@@ -1,0 +1,267 @@
+package calculo;
+
+import java.util.Scanner;
+/**
+ * <h2>Clase Calcualadora</h2>
+ *  En la clase calculadora nos encontramos en la clase principal del proyecto(main).
+ * Tenemos dos metodos <strong>solicitaDatosyRealizaCalculo, obtenerCalculo</strong> que nos van a servir para pedir datos numericos 
+ * y realizar una serie operaciones de calculo como <u>sumar,restar,dividir y multiplicar</u>.
+ * 
+ * <ul>
+ * <li>@author Elias Calvo</li>
+ * <li>@since 08/04/2025</li>
+ * <li>@version 1.0</li>
+ * </ul>
+ */
+public class Calculadora {
+	/**
+	 * <strong>Metodo principal de la aplicacion</strong>
+	 * 
+	 * Es el inicio de nuestro programa, llama al metodo: obtenerCalculo() para ejecutar la funcion inicial.
+	 * 
+	 * @param args, argumentos de linea de comandos.
+	 */
+	public static void main(String[] args) {
+		obtenerCalculo();
+	}
+	/**
+	 * <b>Metodo publico obtenerCalculo</b>
+	 * 
+	 * Este metodo va a ser el que nos permite decidir que operacion realizar : <u>sumar,restar,dividir y multiplicar</u>.
+	 * Utilizamos la clase scanner, con el nombre de "Scanner lectura".
+	 * Nos pedirá la operacion a realizar; 1.suma  2.resta  3.divide 4.tabla de multiplicar.
+	 * Seguidamente le pasamos el numero de la operacion que queremos realizar y llamamos al metodo: <u>solicitaDatosyRealizaCalculo(calculoS);</u>
+	 * ahora explicaremos que hace este metodo para que quede claro.
+	 */
+	public static void obtenerCalculo() {
+		Scanner lectura = new Scanner (System.in);
+		System.out.println("Ingrese el número de una de las operaciones: ");
+		System.out.println("1 - Suma ");
+		System.out.println("1 - Resta ");
+		System.out.println("3 - Divide");
+		System.out.println("4 - Tabla de multiplicar ");
+		String calculoS = lectura.next();
+		solicitaDatosyRealizaCalculo(calculoS);
+	}
+	/**
+	 * <strong>Metodo publico solicitaDatosyRealizaCalculo</strong>
+	 * Creamos las siguientes variables para poder operar con nuestro metodo y hacer que realice operaciones que deseamos a traves
+	 * de un "switch" de forma ordenada y para terminar nos muestra un mensaje por pantalla finalizando nuestro calculo.
+	 * 
+	 * <ul>
+	 * <li>String numero1</li>
+	 * <li>String numero2</li>
+	 * <li>Scanner lectura</li>
+	 * <li>Calculo calculo</li>
+	 * </ul>
+	 * 
+	 *<ul>
+	 * <li>caso 1: Seleccionamos sumar, nos pide introducir dos numeros, lo hacemos y por ultimo nos muestra el resultado.</li>
+	 * <li>caso 2: Seleccionamos restar, nos pide introducir dos numeros, lo hacemos y por ultimo nos muestra el resultado.</li>
+	 * <li>caso 3: Seleccionamos dividir, nos pide introducir dos numeros, lo hacemos, por ultimo nos muestra el resultado si hay un error no muestra un excepcion.</li>
+	 * <li>caso 4: Seleccionamos multiplicar, nos pide introducir dos numeros, , por ultimo nos muestra el resultado si hay un error no muestra un excepcion.</li>
+	 * <li>Si introducimos algun caso que no sea del uno al cuatro nos muestra por defecto un mensaje error.</li>
+	 * </ul>
+	 * 
+	 * @param operacion final String.
+	 */
+	public static void solicitaDatosyRealizaCalculo(final String operacion) {
+		String numero1 ="";
+		String numero2 ="";
+		Scanner lectura =null;
+		Calculo calculo =null;
+		switch (operacion) {
+        case "1": 
+        	System.out.println ("Ha seleccionado sumar"); 
+        	lectura = new Scanner (System.in);
+    		System.out.println("Ingrese los números a sumar: ");
+    		System.out.println("Numero 1: ");
+    		numero1 = lectura.next();
+    		System.out.println("Numero 2: ");
+    		numero2 = lectura.next();
+    		calculo = new Calculo(Integer.parseInt(numero1));
+    		calculo.setNumero2(Integer.parseInt(numero2));
+    		System.out.println("El resultado es: "+ calculo.sumaNumeros());
+        break;
+        
+        case "2":
+        	System.out.println ("Ha seleccionado restar"); 
+        	lectura = new Scanner (System.in);
+    		System.out.println("Ingrese los números a restar: ");
+    		System.out.println("Numero 1: ");
+    		numero1 = lectura.next();
+    		System.out.println("Numero 2: ");
+    		numero2 = lectura.next();
+    		calculo = new Calculo(Integer.parseInt(numero1));
+    		calculo.setNumero2(Integer.parseInt(numero2));
+    		System.out.println("El resultado es: "+ calculo.restaNumeros());
+        break;
+
+        case "3": 
+        	System.out.println ("Ha seleccionado dividir "); 
+        	lectura = new Scanner (System.in);
+    		System.out.println("Ingrese los números a dividir: ");
+    		System.out.println("Numero 1: ");
+    		numero1 = lectura.next();
+    		System.out.println("Numero 2: ");
+    		numero2 = lectura.next();
+    		calculo = new Calculo(Integer.parseInt(numero1));
+    		calculo.setNumero2(Integer.parseInt(numero2));
+    		try {
+    			System.out.println("El resultado es: "+ calculo.divideNumeros());
+    		} catch (Exception e) {
+    			System.out.println("Ha dado error "+e.getMessage());
+    		}
+        break;
+        case "4":
+        	System.out.println ("Ha seleccionado obtener la tabla de multiplicar "); 
+        	lectura = new Scanner (System.in);
+    		System.out.println("Ingrese el número a obtener su tabla: ");
+    		System.out.println("Numero 1: ");
+    		numero1 = lectura.next();
+    		calculo = new Calculo(Integer.parseInt(numero1));
+    		calculo.muestraTablaMultiplicar();
+	        break;
+        default: System.out.println ("No existe el calculo solicitado");
+        
+        break;
+	} 
+	System.out.println("Finalización del cálculo");
+	}
+
+}
+******************************************************************************************************************
+package calculo;
+/**
+*<h2>Clase Calculo</h2>
+*En esta clase calculo vamos a realizar una serie de operaciones como:<strong>sumar,restar,dividir y mostrar 
+*tabla de multiplicar.</strong>
+ * <ul>
+ * <li>@author Elias Calvo</li>
+ * <li>@since 28/03/2025</li>
+ * <li>@version 1.0</li>
+ * </ul>
+*/
+public class Calculo {
+	
+	/**
+	*<h3>Tenemos dos atributos enteros: </h3>
+	*int numero 1.
+	*int numero 2.
+	*/
+	
+     int numero1;
+    
+     int numero2;
+	/**
+	*<h3>Constructor Calculo sin parametros</h3>
+	*Se realiza una llamada al super, con el cual se heredan los atributos del padre si los hubiese e
+	*inicializamos nuestro atributo int numero1 con valor 0.
+	*
+	*
+	*/
+    public Calculo() {
+		super();
+		this.numero1 = 0;
+	}
+	/**
+	*<h3>Constructor Calculo con parametro</h3>
+	*Se realiza una llamada al super, con el cual se heredan los atributos del padre si los hubiese e
+	*inicializamos nuestro atributo int numero1 con valor numero1, es decir con el valor que nosotros le demos en este caso.
+	*@param int numero1, valor entero.
+	*
+	*/
+	public Calculo(int numero1) {
+		super();
+		this.numero1 = numero1;
+	}
+
+	/**
+	*<h3>Constructor Calculo con parametros</h3>
+	*Se realiza una llamada al super, con el cual se heredan los atributos del padre si los hubiese e
+	*inicializamos nuestro atributo int numero1 con valor numero1 y nuestro atributo int numero2 con valor numero2, 
+	*es decir con el valor que nosotros les demos en este caso.
+	*@param int numero1, valor entero.
+	*@param int numero2, valor entero.
+	*/
+	public Calculo(int numero1, int numero2) {
+		super();
+		this.numero1 = numero1;
+		this.numero2 = numero2;
+	}
+	
+	/**
+	*<h2>Getters y Setters</h2>
+	*Nos sirven para establecer y devolver valores de nuestras variables para realizar nuestros metodos.
+	*
+	*
+	*<h3>Metodo publico setNumero2</h3>
+	*Establece el valor de int numero2.
+	*@param numero2
+	*/
+	public void setNumero2(int numero2) {
+		this.numero2 = numero2;
+	}
+	/**
+	*<h3>Metodo publico entero getNumero2</h3>
+	*Devuelve el valor de int numero2.
+	*@return numero2
+	*/
+	public int getNumero2() {
+		return numero2;
+	}
+	
+	/**
+	*<h3>Metodo publico entero getNumero1</h3>
+	*Devuelve el valor de int numero1.
+	*@return numero1
+	*/
+	public int getNumero1() {
+		return numero1;
+	}
+	
+	/**
+	*<h2>Metodo publico entero sumaNumeros</h2>
+	*Realiza la operacion suma de numero1 + numero2
+	*@return numero1 + numero2
+	*/
+	public int sumaNumeros() {
+		return numero1 + numero2;
+	}
+	/**
+	*<h2>Metodo publico entero restaNumeros</h2>
+	*Realiza la operacion resta de numero1 - numero2
+	*@return numero1 - numero2
+	*/
+	public int restaNumeros() {
+		return numero1 - numero2;
+	}
+	
+	/**
+	*<h2>Metodo publico entero divideNumeros</h2>
+	*Nos muestra una excepcion si el valor de numero2 es cero, ya que no es posible dividir entre 0.
+	*@throw "No se puede dividir por 0"
+	*@return numero1 / numero2
+	*/
+	public int divideNumeros() throws Exception {
+		if(numero2 == 0) {
+			throw new Exception("No se puede dividir por 0");
+		}
+		return numero1 / numero2;
+	}
+	
+	/**
+	*<h2>Metodo publico muestraTablaMultiplicar</h2>
+	*Nos multiplica y nos muestra el numero que ingresemos,
+	*multiplicado desde el numero 0 hasta el numero 10 (i)
+	*y sus resultados.
+	*/
+	public void muestraTablaMultiplicar() {
+		for(int i = 0; i<=10; i++) {
+			int resultado = numero1 * i;
+			System.out.println(String.format("%1$d x %2$d = %3$d ",numero1, i, resultado));
+		}
+	}
+
+
+}
